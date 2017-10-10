@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "PrivateTrafficManager", "PrivateTrafficManager\PrivateTrafficManager.deployproj", "{9CA65778-B312-4E54-BAA4-A88CF4E826F5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9CA65778-B312-4E54-BAA4-A88CF4E826F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CA65778-B312-4E54-BAA4-A88CF4E826F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CA65778-B312-4E54-BAA4-A88CF4E826F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CA65778-B312-4E54-BAA4-A88CF4E826F5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC1DB5BB-8E10-43FA-82A9-68B2D604F096}
+	EndGlobalSection
+EndGlobal
