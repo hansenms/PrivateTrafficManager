@@ -842,7 +842,7 @@
       "name": "[variables('wwwVm1Name')]",
       "location": "[parameters('region2')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkInterfaces/', variables('wwwVm1Name'))]"
+        "[resourceId('Microsoft.Network/networkInterfaces/', variables('wwwVm1NicName'))]"
       ],
       "properties": {
         "hardwareProfile": {
@@ -879,7 +879,7 @@
       "name": "[variables('wwwVm2Name')]",
       "location": "[parameters('region3')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/networkInterfaces/', variables('wwwVm2Name'))]"
+        "[resourceId('Microsoft.Network/networkInterfaces/', variables('wwwVm2NicName'))]"
       ],
       "properties": {
         "hardwareProfile": {
