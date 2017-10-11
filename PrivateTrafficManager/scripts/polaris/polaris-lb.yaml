@@ -1,0 +1,25 @@
+#
+# Example configuration
+#
+pools:
+    www-example:
+        monitor: http
+        monitor_params:
+            use_ssl: false
+            hostname: myweb.contoso.local
+            url_path: /
+        lb_method: fogroup 
+        fallback: any
+        members:
+        - ip: 10.1.0.5
+          name: www1
+          weight: 1
+        - ip: 10.2.0.5
+          name: www2
+          weight: 1
+
+globalnames:
+    myweb.contoso.local.:
+        pool: www-example
+        ttl: 1
+

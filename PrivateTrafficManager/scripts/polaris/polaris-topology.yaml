@@ -1,0 +1,7 @@
+# For overlapping networks the most specific match(longest prefix length) is returned.
+
+datacenter1:
+- 10.1.0.5/32
+
+datacenter2:
+- 10.2.0.5/32
