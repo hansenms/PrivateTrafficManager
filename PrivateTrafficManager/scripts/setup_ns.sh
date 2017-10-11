@@ -15,4 +15,26 @@ debconf-set-selections <<< "pdns-backend-mysql pdns-backend-mysql/dbconfig-upgra
 debconf-set-selections <<< "pdns-backend-mysql pdns-backend-mysql/dbconfig-install select true"
 
 apt-get update 
-apt-get -y install mysql-server mysql-client  pdns-server pdns-backend-mysql pdns-server pdns-backend-remote
+apt-get -y install mysql-server mysql-client  pdns-server pdns-backend-mysql pdns-server pdns-backend-remote memcached python3-pip
+
+#Add recurser to Azure DNS
+sudo sed -i.bak 's/# recursor=no/recurser=168.63.129.16/' /etc/powerdns/pdns.conf
+
+#Install polaris
+git clone https://github.com/polaris-gslb/polaris-gslb.git
+cd polaris-gslb
+sudo python3 setup.py install
+
+wget https://raw.githubusercontent.com/hansenms/PrivateTrafficManager/master/PrivateTrafficManager/scripts/pdns/pdns.local.remote.conf
+wget https://raw.githubusercontent.com/hansenms/PrivateTrafficManager/master/PrivateTrafficManager/scripts/polaris/polaris-health.yaml
+wget https://raw.githubusercontent.com/hansenms/PrivateTrafficManager/master/PrivateTrafficManager/scripts/polaris/polaris-lb.yaml
+wget https://raw.githubusercontent.com/hansenms/PrivateTrafficManager/master/PrivateTrafficManager/scripts/polaris/polaris-pdns.yaml
+wget https://raw.githubusercontent.com/hansenms/PrivateTrafficManager/master/PrivateTrafficManager/scripts/polaris/polaris-topology.yaml
+
+cp pdns.local.remote.conf /etc/powerdns/pdns.d/
+cp *.yaml /opt/polaris/etc/
+systemctl restart pdns.service
+/opt/polaris/bin/polaris-health stop
+/opt/polaris/bin/polaris-health start
+
+
