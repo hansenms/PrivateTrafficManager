@@ -830,7 +830,7 @@
               "subnet": {
                 "id": "[variables('vnet3Subnet1Ref')]"
               },
-              "privateIPAddress": "10.1.0.5"
+              "privateIPAddress": "10.2.0.5"
             }
           }
         ]
@@ -909,8 +909,55 @@
           ]
         }
       }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('wwwVm1Name'),'/CustomScriptExtension')]",
+      "location": "[parameters('region2')]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', variables('wwwVm1Name'))]"
+      ],
+      "tags": {
+        "displayName": "[concat(variables('wwwVm1Name'),'setup')]"
+      },
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "https://raw.githubusercontent.com/hansenms/PrivateTrafficManager/master/PrivateTrafficManager/scripts/setup_www.sh"
+          ],
+          "commandToExecute": "bash ./setup_www.sh"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('wwwVm2Name'),'/CustomScriptExtension')]",
+      "location": "[parameters('region3')]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', variables('wwwVm2Name'))]"
+      ],
+      "tags": {
+        "displayName": "[concat(variables('wwwVm2Name'),'setup')]"
+      },
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "https://raw.githubusercontent.com/hansenms/PrivateTrafficManager/master/PrivateTrafficManager/scripts/setup_www.sh"
+          ],
+          "commandToExecute": "bash ./setup_www.sh"
+        }
+      }
     }
-
   ],
   "outputs": {}
 }
