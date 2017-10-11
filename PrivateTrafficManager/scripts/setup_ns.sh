@@ -18,7 +18,7 @@ apt-get update
 apt-get -y install mysql-server mysql-client  pdns-server pdns-backend-mysql pdns-server pdns-backend-remote memcached python3-pip
 
 #Add recurser to Azure DNS
-sudo sed -i.bak 's/# recursor=no/recurser=168.63.129.16/' /etc/powerdns/pdns.conf
+sudo sed -i.bak 's/# recursor=no/recursor=168.63.129.16/' /etc/powerdns/pdns.conf
 
 #Install polaris
 git clone https://github.com/polaris-gslb/polaris-gslb.git

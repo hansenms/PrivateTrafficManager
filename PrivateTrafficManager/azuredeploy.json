@@ -713,13 +713,13 @@
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('nsVm1Name'),'/CustomScriptExtension')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('region2')]",
       "apiVersion": "2015-06-15",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/', variables('nsVm1Name'))]"
       ],
       "tags": {
-        "displayName": "marssetup"
+        "displayName": "[concat(variables('nsVm1Name'),'setup')]"
       },
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
@@ -737,13 +737,13 @@
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('nsVm2Name'),'/CustomScriptExtension')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('region3')]",
       "apiVersion": "2015-06-15",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/', variables('nsVm2Name'))]"
       ],
       "tags": {
-        "displayName": "marssetup"
+        "displayName": "[concat(variables('nsVm2Name'),'setup')]"
       },
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
