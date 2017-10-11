@@ -3,10 +3,13 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "region3": {
-      "value": "northcentralus"
+      "value": "westcentralus"
     },
     "adminUsername": {
       "value": "mihansen"
+    },
+    "region2": {
+      "value": "westus2"
     }
   }
 }
