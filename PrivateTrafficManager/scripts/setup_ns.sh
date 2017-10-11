@@ -37,4 +37,9 @@ systemctl restart pdns.service
 /opt/polaris/bin/polaris-health stop
 /opt/polaris/bin/polaris-health start
 
-
+ pdnsutil create-zone contoso.local
+ pdnsutil add-record contoso.local ns1 A 10.1.0.4
+ pdnsutil add-record contoso.local ns2 A 10.2.0.4
+ pdnsutil add-record contoso.local www1 A 10.1.0.5
+ pdnsutil add-record contoso.local www2 A 10.2.0.5
+ 

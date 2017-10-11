@@ -167,13 +167,18 @@
     "controlVMOSVersion": "2016-Datacenter",
     "controlVMSize": "Standard_A2",
     "nameServerVMSize": "Standard_A1",
+    "wwwServerVMSize": "Standard_A1",
     "nsVm1NicName": "ns1nic",
     "nsVm2NicName": "ns2nic",
     "linuxImagePublisher": "Canonical",
     "linuxImageOffer": "UbuntuServer",
     "ubuntuOSVersion": "16.04.0-LTS",
     "nsVm1Name": "ns1",
-    "nsVm2Name": "ns2"
+    "nsVm2Name": "ns2",
+    "wwwVm1NicName": "www1nic",
+    "wwwVm2NicName": "www2nic",
+    "wwwVm1Name": "www1",
+    "wwwVm2Name": "www2"
   },
   "resources": [
     {
@@ -189,6 +194,13 @@
         "addressSpace": {
           "addressPrefixes": [
             "[variables('vnet1Prefix')]"
+          ]
+        },
+        "dhcpOptions": {
+          "dnsServers": [
+            "10.1.0.4",
+            "10.2.0.4",
+            "168.63.129.16"
           ]
         },
         "subnets": [
@@ -222,6 +234,13 @@
             "[variables('vnet2Prefix')]"
           ]
         },
+        "dhcpOptions": {
+          "dnsServers": [
+            "10.1.0.4",
+            "10.2.0.4",
+            "168.63.129.16"
+          ]
+        },
         "subnets": [
           {
             "name": "[variables('vnet2Subnet1Name')]",
@@ -251,6 +270,13 @@
         "addressSpace": {
           "addressPrefixes": [
             "[variables('vnet3Prefix')]"
+          ]
+        },
+        "dhcpOptions": {
+          "dnsServers": [
+            "10.1.0.4",
+            "10.2.0.4",
+            "168.63.129.16"
           ]
         },
         "subnets": [
@@ -757,7 +783,134 @@
           "commandToExecute": "[concat('bash ./setup_ns.sh ', parameters('adminPassword'))]"
         }
       }
+    },
+    {
+      "name": "[variables('wwwVm1NicName')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[parameters('region2')]",
+      "apiVersion": "2016-03-30",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet2Name'))]"
+      ],
+      "tags": {
+        "displayName": "[variables('wwwVm1NicName')]"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "subnet": {
+                "id": "[variables('vnet2Subnet1Ref')]"
+              },
+              "privateIPAddress": "10.1.0.5"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "[variables('wwwVm2NicName')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[parameters('region3')]",
+      "apiVersion": "2016-03-30",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vnet3Name'))]"
+      ],
+      "tags": {
+        "displayName": "[variables('wwwVm2NicName')]"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "subnet": {
+                "id": "[variables('vnet3Subnet1Ref')]"
+              },
+              "privateIPAddress": "10.1.0.5"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2017-03-30",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('wwwVm1Name')]",
+      "location": "[parameters('region2')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces/', variables('wwwVm1Name'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[variables('wwwServerVMSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('wwwVm1Name')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('linuxImagePublisher')]",
+            "offer": "[variables('linuxImageOffer')]",
+            "sku": "[variables('ubuntuOSVersion')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('wwwVm1NicName'))]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-03-30",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('wwwVm2Name')]",
+      "location": "[parameters('region3')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces/', variables('wwwVm2Name'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[variables('wwwServerVMSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('wwwVm2Name')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('linuxImagePublisher')]",
+            "offer": "[variables('linuxImageOffer')]",
+            "sku": "[variables('ubuntuOSVersion')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('wwwVm2NicName'))]"
+            }
+          ]
+        }
+      }
     }
+
   ],
-    "outputs": {}
-  }
+  "outputs": {}
+}
