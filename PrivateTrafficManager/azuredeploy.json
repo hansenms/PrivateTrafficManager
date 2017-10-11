@@ -709,8 +709,55 @@
           ]
         }
       }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('nsVm1Name'),'/CustomScriptExtension')]",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', variables('nsVm1Name'))]"
+      ],
+      "tags": {
+        "displayName": "marssetup"
+      },
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "https://raw.githubusercontent.com/hansenms/PrivateTrafficManager/master/PrivateTrafficManager/scripts/setup_ns.sh"
+          ],
+          "commandToExecute": "[concat('bash ./setup_ns.sh ', parameters('adminPassword'))]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "[concat(variables('nsVm2Name'),'/CustomScriptExtension')]",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', variables('nsVm2Name'))]"
+      ],
+      "tags": {
+        "displayName": "marssetup"
+      },
+      "properties": {
+        "publisher": "Microsoft.Azure.Extensions",
+        "type": "CustomScript",
+        "typeHandlerVersion": "2.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "https://raw.githubusercontent.com/hansenms/PrivateTrafficManager/master/PrivateTrafficManager/scripts/setup_ns.sh"
+          ],
+          "commandToExecute": "[concat('bash ./setup_ns.sh ', parameters('adminPassword'))]"
+        }
+      }
     }
-
   ],
     "outputs": {}
   }
