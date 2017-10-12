@@ -40,6 +40,7 @@ systemctl restart pdns.service
 
 #Copy startup to ensure proper reboot behavior
 cp polaris.service /etc/systemd/system
+systemctl enable polaris.service
 
  pdnsutil create-zone contoso.local
  pdnsutil add-record contoso.local ns1 A 10.1.0.4
