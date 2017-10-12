@@ -1,0 +1,12 @@
+[Unit]
+Description=Simple Polaris GSLB App
+After=syslog.target network.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/polaris/bin/polaris-health start
+ExecStop=/opt/polaris/bin/polaris-health stop
+
+
+[Install]
+WantedBy=multi-user.target
