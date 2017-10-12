@@ -35,12 +35,11 @@ wget https://raw.githubusercontent.com/hansenms/PrivateTrafficManager/master/Pri
 cp pdns.local.remote.conf /etc/powerdns/pdns.d/
 cp *.yaml /opt/polaris/etc/
 systemctl restart pdns.service
-/opt/polaris/bin/polaris-health stop
-/opt/polaris/bin/polaris-health start
 
 #Copy startup to ensure proper reboot behavior
 cp polaris.service /etc/systemd/system
 systemctl enable polaris.service
+systemctl start polaris.service
 
  pdnsutil create-zone contoso.local
  pdnsutil add-record contoso.local ns1 A 10.1.0.4
