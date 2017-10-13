@@ -10,7 +10,7 @@ Polaris GSLB is an Open Source Global Traffic Manager, which can be configured t
 
 In each of the regions that have a private DNS server, the template also establishes a small VM with an nginx web server running in a Docker container. The Polaris GSLBs monitor the two web servers for health and direct clients to the correct region based on availability.
 
-In the first region, the template establishes a Windows VM (a jumpbox). That first region could be though of as an on-prem network peered with two cloud regions. In this example, the jump box has a public IP address, but we could have eliminated that and established the connection to the first region through a Point-To-Site VPN connection. Or in a more realistic scenario, the jump box would be on the on-prem private network. 
+In the first region, the template establishes a Windows VM (a jumpbox). That first region could be thought of as an on-prem network peered with two cloud regions. In this example, the jump box has a public IP address, but we could have eliminated that and established the connection to the first region through a Point-To-Site VPN connection. Or in a more realistic scenario, the jump box would be on the on-prem private network. 
  
 The template does not use features such as Docker Extension, etc. This allows this pattern to be deploy in both Azure Commercial Cloud and Azure Government Cloud. 
 
